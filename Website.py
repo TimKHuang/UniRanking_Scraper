@@ -5,8 +5,36 @@ from time import sleep
 from bs4 import BeautifulSoup
 
 class Webiste(ABC):
+    """
+    Abstract Class of a certain ranking website. Provide basic scrape function.
+
+    :Attributes:
+     - string url_format - a string with {} holding the place for the year to scrape.
+     - string name - name of the website / organisation
+     - int year - the year to scrape. Initialised in the scrape(year)
+     - webdriver driver - the driver of the browser. Initialised in the scrape(year)
+
+    :Funcitons:
+    - scrape - scrape the website given a certain year.
+
+    :ABmethod:
+     - getAllRows - find and return all the rows in the rank table
+     - parse - parse the source of a row into a dictionary
+
+    :Helper:
+     - expandByClickAll - Function that expands to show the whole content of the page
+     - getNextPage - Function that yields a page each time
+     - rankFormat - Function that translate the rank from string to int
+    """
 
     def __init__(self, name, url_format):
+        """
+        Constructor of the class
+
+        :Args:
+         - string url_format - a string with {} holding the place for the year to scrape.
+         - string name - name of the website / organisation
+        """
         self.url_format = url_format
         self.name = name
 
@@ -42,10 +70,6 @@ class Webiste(ABC):
 
         :Yield:
          - soup row - a row that is get by the soup analysing the page source.
-        
-        :Helper:
-         - expandByClickAll - Function that expands to show the whole content of the page
-         - getNextPage - Functino that yields a page each time
         """
         pass
     
@@ -72,12 +96,6 @@ class Webiste(ABC):
         """
         pass
 
-    # getResult() will reutrn the closed finished result  
-    def getResult(self):
-        # TODO
-        pass
-
-    # This two helper functions below offers easy ways to override the __getAllRow
     def expandByClickAll(self, *, select_xpath = None, all_xpath):
         """
         Expand the page to show all and yield all the table rows.
