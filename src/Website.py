@@ -4,7 +4,7 @@ from selenium.common.exceptions import NoSuchElementException, ElementClickInter
 from time import sleep
 from bs4 import BeautifulSoup
 
-class Webiste(ABC):
+class Website(ABC):
     """
     Abstract Class of a certain ranking website. Provide basic scrape function.
 
@@ -61,6 +61,28 @@ class Webiste(ABC):
             result.append(self.parse(row))
         
         self.driver.close()
+        return result
+
+    def scrapeAll(self, start, end):
+        '''
+        Scrap a range of year. Inclusive on both end.
+        print the years that has raised an error.
+
+        :Args:
+         - int start - the start year
+         - int end - the end year
+        
+        :Returns:
+        - List<Dictionary> - The data scraped. The content of the dictiontary is defined in 
+            the docstring of parse(self, row)
+        '''
+        result = []
+        for year in range(start, end+1):
+            try:
+                result += self.scrape(year)
+            except Exception as e:
+                print(year)
+                print(e)
         return result
         
     @abstractmethod
@@ -135,4 +157,13 @@ class Webiste(ABC):
         :Returns:
          - int rank - a single rank integer
         """
-        return int(rank.replace("=", '').replace("+", '').split('-')[0].strip())
+        result = ""
+        isNumber = False
+        for char in rank:
+            if char.isdigit():
+                isNumber == True
+                result += char
+                continue
+            if isNumber:
+                break
+        return int(result)

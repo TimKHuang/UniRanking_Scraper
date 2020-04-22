@@ -25,6 +25,8 @@ class SQLiteDB:
         :Args:
          - string db_name - the name of the database. Must end in .db
         '''
+        self.database = None
+        self.cursor = None
         self.db_name = db_name
         self.connect()
         self.createTable()

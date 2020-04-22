@@ -1,8 +1,8 @@
-from Website import Webiste
+from Website import Website
 
-class QS(Webiste):
+class QS(Website):
     '''
-    QS scrapper inherted from the Website Abstract class.
+    Top Univeristies scrapper inherted from the Website Abstract class.
 
     :Override Fucntions:
      - getAllRows - get by click the show all button on the page.
@@ -36,3 +36,36 @@ class QS(Webiste):
             'rank' : rank
         }
 
+class Times(Website):
+    '''
+    Times Higer Education scrapper inherted from the Website Abstract class.
+
+    :Override Fucntions:
+     - getAllRows - get by click the show all button on the page.
+     - parse
+    '''
+    def __init__(self):
+        super().__init__("Times", 
+            "https://www.timeshighereducation.com/world-university-rankings/{}/world-ranking#!/page/0/length/25/sort_by/rank/sort_order/asc/cols/stats")
+
+    def getAllRows(self):
+        page_src = self.expandByClickAll(all_xpath = '//*[@id="datatable-1_length"]/label/select/option[5]')
+        
+        for uni in page_src.find('tbody').find_all('tr'):
+            yield uni
+    
+    def parse(self, row):
+        rank = self.rankFormat(row.find(attrs = {'class' : 'rank sorting_1 sorting_2'}).text)
+        name = row.find(attrs = {'class' : 'ranking-institution-title'}).text
+        country = row.find(attrs = {'class' : 'location'}).text
+
+        return {
+            'name' : name,
+            'logo' : None,
+            'country' : country,
+            'subject' : 'All',
+            'org' : self.name,
+            'year' : self.year,
+            'rank' : rank
+        }
+        
