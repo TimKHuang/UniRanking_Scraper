@@ -106,7 +106,7 @@ class Webiste(ABC):
          - string all_xpath - the relative xpath to the button of showing all
 
         :Returns:
-         - src - the source of the expanded page.
+         - soup src - the source of the expanded page that has been analysed use beautifulSoup with html5lib.
         """
         while(True):
             try:
@@ -119,7 +119,7 @@ class Webiste(ABC):
                 continue
         
         sleep(5)
-        return self.driver.page_source
+        return BeautifulSoup(self.driver.page_source, 'html5lib')
 
     def getNextPage(self, *, next_xpath):
         # TODO
