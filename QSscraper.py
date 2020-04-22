@@ -80,7 +80,7 @@ def txtOutputer(result):
     print('File writing finished.')
 
 def database_initialise():
-    uni_db = sqlite3.connect('ucollege.db')
+    uni_db = sqlite3.connect('ucollege_test.db')
     uni_c = uni_db.cursor()
     try:
         uni_c.execute('''CREATE TABLE Rank
@@ -99,7 +99,7 @@ def database_initialise():
 def databaseOutput(result):
     database_initialise()
 
-    uni_db = sqlite3.connect('ucollege.db')
+    uni_db = sqlite3.connect('ucollege_test.db')
     uni_c = uni_db.cursor()
 
     for dictionary in result:
@@ -110,16 +110,16 @@ def databaseOutput(result):
                     dictionary['country'],
                     dictionary['subject'],
                     dictionary['org'],
-                    dictionary['rank'],
-                    dictionary['year']))
+                    dictionary['year'],
+                    dictionary['rank']))
             else:
                 uni_c.execute("INSERT INTO Rank VALUES ('{}', NULL, '{}', '{}','{}', {}, {});".format(
                     dictionary['name'],
                     dictionary['country'],
                     dictionary['subject'],
                     dictionary['org'],
-                    dictionary['rank'],
-                    dictionary['year']))
+                    dictionary['year'],
+                    dictionary['rank']))
             continue
 
         if "'" in dictionary["name"]:
@@ -129,8 +129,8 @@ def databaseOutput(result):
                 dictionary['country'],
                 dictionary['subject'],
                 dictionary['org'],
-                dictionary['rank'],
-                dictionary['year']))
+                dictionary['year'],
+                dictionary['rank']))
         else:
             uni_c.execute("INSERT INTO Rank VALUES ('{}', '{}', '{}', '{}','{}', {}, {});".format(
                 dictionary['name'],
@@ -138,8 +138,8 @@ def databaseOutput(result):
                 dictionary['country'],
                 dictionary['subject'],
                 dictionary['org'],
-                dictionary['rank'],
-                dictionary['year']))
+                dictionary['year'],
+                dictionary['rank']))
 
     uni_db.commit()
     uni_db.close()

@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 from selenium import webdriver
-from selenium.common.exceptions import NoSuchElementException
+from selenium.common.exceptions import NoSuchElementException, ElementClickInterceptedException
 from time import sleep
 from bs4 import BeautifulSoup
 
@@ -47,7 +47,7 @@ class Webiste(ABC):
         
         :Returns:
          - List<Dictionary> - The data scraped. The content of the dictiontary is defined in 
-            the dostring of parse(self, row)
+            the docstring of parse(self, row)
         """
         self.year = year
         
@@ -114,7 +114,8 @@ class Webiste(ABC):
                 if(select_xpath):
                     self.driver.find_element_by_xpath(select_xpath).click()
                 self.driver.find_element_by_xpath(all_xpath).click()
-            except NoSuchElementException:
+                break
+            except (NoSuchElementException, ElementClickInterceptedException):
                 continue
         
         sleep(5)
