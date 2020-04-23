@@ -69,3 +69,72 @@ class Times(Website):
             'rank' : rank
         }
         
+class ARWU(Website):
+    '''
+    Shanghairanking Academic Ranking of World Universities scrapper inherted from the Website Abstract class.
+
+    :Override Fucntions:
+     - getAllRows - get by click the show all button on the page.
+     - parse
+    '''
+    def __init__(self):
+        super().__init__("ARWU", "http://www.shanghairanking.com/ARWU{}.html")
+    
+    def getAllRows(self):
+        page_src = self.soup(self.driver.page_source)
+        
+        first = True
+        for uni in page_src.find('tbody').find_all('tr'):
+            if first:
+                first = False
+                continue
+            yield uni
+    
+    def parse(self, row):
+        rank = self.rankFormat(row.find('td').text)
+        uni = row.find_all(attrs = {'target' : '_blank'})
+        name = uni[0].text
+        country = uni[1]['title'].replace("View universities in ", "").replace(".", "")
+        
+        return {
+            'name' : name,
+            'logo' : None,
+            'country' : country,
+            'subject' : 'All',
+            'org' : self.name,
+            'year' : self.year,
+            'rank' : rank
+        }
+
+class CWTS(Website):
+    '''
+    CWTS Leiden Ranking scrapper inherted from the Website Abstract class.
+
+    :Override Fucntions:
+     - getAllRows - get by click the show all button on the page.
+     - parse
+    '''
+    def __init__(self):
+        super().__init__("CWTS", "https://www.leidenranking.com/ranking/{}")
+    
+    def getAllRows(self):
+        page_src = self.soup(self.driver.page_source)
+
+        for table in page_src.find_all(attrs = {'class' : 'pagedtable ranking'}):
+            for uni in table.find('tbody').find_all('tr'):
+                yield uni
+    
+    def parse(self, row):
+        rank = self.rankFormat(row.find(attrs = {"class" : "rank"}).text)
+        name = row.find(attrs = {"class" : "university"}).text
+        country = row.find("img")['data-tooltip']
+
+        return {
+            'name' : name,
+            'logo' : None,
+            'country' : country,
+            'subject' : 'All',
+            'org' : self.name,
+            'year' : self.year,
+            'rank' : rank
+        }

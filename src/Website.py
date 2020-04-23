@@ -118,6 +118,18 @@ class Website(ABC):
         """
         pass
 
+    def soup(self, page_src):
+        '''
+        Get the souped page source
+
+        :Args:
+         - html page_src - the source of the page
+
+        :Returns:
+         - soup - the souped page using html5lib
+        '''
+        return BeautifulSoup(page_src, 'html5lib')
+
     def expandByClickAll(self, *, select_xpath = None, all_xpath):
         """
         Expand the page to show all and yield all the table rows.
@@ -141,7 +153,7 @@ class Website(ABC):
                 continue
         
         sleep(5)
-        return BeautifulSoup(self.driver.page_source, 'html5lib')
+        return self.soup(self.driver.page_source)
 
     def getNextPage(self, *, next_xpath):
         # TODO
@@ -161,7 +173,7 @@ class Website(ABC):
         isNumber = False
         for char in rank:
             if char.isdigit():
-                isNumber == True
+                isNumber = True
                 result += char
                 continue
             if isNumber:
