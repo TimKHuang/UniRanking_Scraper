@@ -91,6 +91,9 @@ class SQLiteDB:
          - dicitionary uni_dictionary - the dictionary contains uni information.
          - string table - the table to insert. Default: Rank
         '''
+        if(len(uni_dictionary['name']) == 0 or len(uni_dictionary['country']) == 0):
+            return 
+            
         if uni_dictionary['logo'] == None:
             if "'" in uni_dictionary["name"]:
                 script = 'INSERT INTO {} VALUES ("{}", NULL, "{}", "{}", "{}", {}, {});'
