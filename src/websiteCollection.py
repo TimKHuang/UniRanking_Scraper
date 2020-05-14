@@ -27,13 +27,13 @@ class QS(Website):
         country = row.find(attrs = {'class' : 'country'}).text
         
         return {
-            'name' : name,
-            'logo' : logo,
-            'country' : country,
-            'subject' : 'All',
-            'org' : self.name,
-            'year' : self.year,
-            'rank' : rank
+            'Name' : name,
+            'Logo' : logo,
+            'Country' : country,
+            'Subject' : 'All',
+            'Organisation' : self.name,
+            'Year' : self.year,
+            'Rank' : rank
         }
 
 class Times(Website):
@@ -60,13 +60,13 @@ class Times(Website):
         country = row.find(attrs = {'class' : 'location'}).text
 
         return {
-            'name' : name,
-            'logo' : None,
-            'country' : country,
-            'subject' : 'All',
-            'org' : self.name,
-            'year' : self.year,
-            'rank' : rank
+            'Name' : name,
+            'Logo' : None,
+            'Country' : country,
+            'Subject' : 'All',
+            'Organisation' : self.name,
+            'Year' : self.year,
+            'Rank' : rank
         }
         
 class ARWU(Website):
@@ -97,13 +97,13 @@ class ARWU(Website):
         country = uni[1]['title'].replace("View universities in ", "").replace(".", "")
         
         return {
-            'name' : name,
-            'logo' : None,
-            'country' : country,
-            'subject' : 'All',
-            'org' : self.name,
-            'year' : self.year,
-            'rank' : rank
+            'Name' : name,
+            'Logo' : None,
+            'Country' : country,
+            'Subject' : 'All',
+            'Organisation' : self.name,
+            'Year' : self.year,
+            'Rank' : rank
         }
 
 class CWTS(Website):
@@ -130,11 +130,11 @@ class CWTS(Website):
         country = row.find("img")['data-tooltip']
 
         return {
-            'name' : name,
-            'logo' : None,
-            'country' : country,
-            'subject' : 'All',
-            'org' : self.name,
-            'year' : self.year,
-            'rank' : rank
+            'Name' : name,
+            'Logo' : None,
+            'Country' : country,
+            'Subject' : 'All',
+            'Organisation' : self.name,
+            'Year' : self.year,
+            'Rank' : rank
         }

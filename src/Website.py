@@ -106,11 +106,11 @@ class Website(ABC):
 
         :Returns:
          - dictionary university {
-             'name' : string
-             'logo' : string - url to the logo picture. None if not.
-             'country' : string
-             'subject' : string
-             'org' : string - the organisation runs the ranking. Should be self.name normally.
+             'Name' : string
+             'Logo' : string - url to the logo picture. None if not.
+             'Country' : string
+             'Subject' : string
+             'Organisation' : string - the organisation runs the ranking. Should be self.name normally.
              'year' : int - the year this ranking result is published. Should be self.year normally.
              'rank' : int - the year should be an integer instead of string like '600+' and '800-100'.
                 A helper formatting function can be called by super.rankFormat(rank).

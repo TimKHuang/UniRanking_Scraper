@@ -75,7 +75,7 @@ class SQLiteDB:
                     Logo TEXT,
                     Country TEXT NOT NULL, 
                     Subject TEXT NOT NULL, 
-                    Org TEXT NOT NULL, 
+                    Organisation TEXT NOT NULL, 
                     Year INT NOT NULL,
                     Rank INT NOT NULL);'''.format(table_name))
         except:
@@ -100,25 +100,25 @@ class SQLiteDB:
             else:
                 script = "INSERT INTO {} VALUES ('{}', NULL, '{}', '{}','{}', {}, {});"
             script = script.format(table_name,
-                    uni_dictionary['name'],
-                    uni_dictionary['country'],
-                    uni_dictionary['subject'],
-                    uni_dictionary['org'],
-                    uni_dictionary['year'],
-                    uni_dictionary['rank'])
+                    uni_dictionary['Name'],
+                    uni_dictionary['Country'],
+                    uni_dictionary['Subject'],
+                    uni_dictionary['Organisation'],
+                    uni_dictionary['Year'],
+                    uni_dictionary['Rank'])
         else:
             if "'" in uni_dictionary["name"]:
                 script = 'INSERT INTO {} VALUES ("{}", "{}", "{}", "{}", "{}", {}, {});'
             else:
                 script = "INSERT INTO {} VALUES ('{}', '{}', '{}', '{}','{}', {}, {});"
             script = script.format(table_name,
-                    uni_dictionary['name'],
-                    uni_dictionary['logo'],
-                    uni_dictionary['country'],
-                    uni_dictionary['subject'],
-                    uni_dictionary['org'],
-                    uni_dictionary['year'],
-                    uni_dictionary['rank'])
+                    uni_dictionary['Name'],
+                    uni_dictionary['Logo'],
+                    uni_dictionary['Country'],
+                    uni_dictionary['Subject'],
+                    uni_dictionary['Organisation'],
+                    uni_dictionary['Year'],
+                    uni_dictionary['Rank'])
         self.cursor.execute(script)
         self.save()
     
