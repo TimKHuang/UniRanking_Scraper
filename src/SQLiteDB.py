@@ -91,11 +91,11 @@ class SQLiteDB:
          - dicitionary uni_dictionary - the dictionary contains uni information.
          - string table - the table to insert. Default: Rank
         '''
-        if(len(uni_dictionary['name']) == 0 or len(uni_dictionary['country']) == 0):
+        if(len(uni_dictionary['Name']) == 0 or len(uni_dictionary['Country']) == 0):
             return 
             
-        if uni_dictionary['logo'] == None:
-            if "'" in uni_dictionary["name"]:
+        if uni_dictionary['Logo'] == None:
+            if "'" in uni_dictionary["Name"]:
                 script = 'INSERT INTO {} VALUES ("{}", NULL, "{}", "{}", "{}", {}, {});'
             else:
                 script = "INSERT INTO {} VALUES ('{}', NULL, '{}', '{}','{}', {}, {});"
@@ -107,7 +107,7 @@ class SQLiteDB:
                     uni_dictionary['Year'],
                     uni_dictionary['Rank'])
         else:
-            if "'" in uni_dictionary["name"]:
+            if "'" in uni_dictionary["Name"]:
                 script = 'INSERT INTO {} VALUES ("{}", "{}", "{}", "{}", "{}", {}, {});'
             else:
                 script = "INSERT INTO {} VALUES ('{}', '{}', '{}', '{}','{}', {}, {});"

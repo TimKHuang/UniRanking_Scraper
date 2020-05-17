@@ -4,7 +4,7 @@ This is an open source project written in Python 3 to get all the ranking result
 
 ## Pre-Requirements
 
-The programme uses python 3 libraries: `selenium`, `bs4`. They can be installed with command `pip install selenium beautifulsoup4` or `pip3 install selenium beautifulsoup4`.
+The programme uses python 3 libraries: `selenium`, `bs4`, `wikipedia`. They can be installed with command `pip install selenium beautifulsoup4 wikipedia` or `pip3 install selenium beautifulsoup4 wikipedia`.
 
 ## Run
 

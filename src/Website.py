@@ -58,7 +58,14 @@ class Website(ABC):
         
         result = []
         for row in self.getAllRows():
-            result.append(self.parse(row))
+            parsed_row = self.parse(row)
+            valid = True
+            for key, value in parsed_row.items():
+                if (value == '' or value == None) and (key != 'Logo'):
+                    valid = False
+            
+            if valid:
+                result.append(parsed_row)
         
         self.driver.close()
         return result
@@ -81,7 +88,7 @@ class Website(ABC):
             try:
                 result += self.scrape(year)
             except Exception as e:
-                print(year)
+                print(year + self.name)
                 print(e)
         return result
         
@@ -111,8 +118,8 @@ class Website(ABC):
              'Country' : string
              'Subject' : string
              'Organisation' : string - the organisation runs the ranking. Should be self.name normally.
-             'year' : int - the year this ranking result is published. Should be self.year normally.
-             'rank' : int - the year should be an integer instead of string like '600+' and '800-100'.
+             'Year' : int - the year this ranking result is published. Should be self.year normally.
+             'Rank' : int - the year should be an integer instead of string like '600+' and '800-100'.
                 A helper formatting function can be called by super.rankFormat(rank).
             }
         """
