@@ -1,4 +1,6 @@
 import wikipedia
+import os
+import requests
 
 class InfoChecker:
     '''
@@ -41,12 +43,26 @@ class InfoChecker:
                 return 'Mainland, China'
 
         if 'univ' in name and 'unive' not in name:
-                name.replace ('univ', 'university')
+                name.replace('univ', 'university')
 
         try:
             return wikipedia.search(name)[0]
         except:
             print(orginal_name + " NOT CHECKED")
+            if 'BING_API_UCOLLEGEX' not in os.environ:
+                return orginal_name
+        
+        try:
+            print('checking bing serach')
+            url = 'https://api.cognitive.microsoft.com/bing/v7.0/search?q='
+            headers = {'Ocp-Apim-Subscription-Key': os.environ['BING_API_UCOLLEGEX']}
+            response = requests.get(url+name+' site:wikipedia.org', headers = headers)
+            name = response.json()['webPages']['value'][0]['name']
+            name = name.replace(' - Wikipedia', '')
+            print(name)
+            return name
+        except:
+            print('still not checked')
             return orginal_name
 
     def getLogo(self, name, logo = None):

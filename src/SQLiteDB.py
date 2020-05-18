@@ -17,6 +17,9 @@ class SQLiteDB:
      - close - close the database. connect() need to be called again to use other functions.
      - insert - insert a university info into the table
      - insertAll - insert a list of univeristy info into the table.
+     - contains - Check if the Translate contains the name
+     - insertTranslate - insert the translated name into the table
+     - fetchall - Fetch all the data from a table
     '''
     def __init__(self, db_name):
         '''
@@ -80,6 +83,13 @@ class SQLiteDB:
                     Rank INT NOT NULL);'''.format(table_name))
         except:
             pass
+
+        try:
+            self.cursor.execute('''CREATE TABLE 'Translate'
+                    (en TEXT NOT NULL, 
+                    cn TEXT NOT NULL);''')
+        except:
+            pass
     
     def insert(self, uni_dictionary, table_name = 'Rank'):
         '''
@@ -135,3 +145,44 @@ class SQLiteDB:
         for uni_dictionary in list:
             self.insert(uni_dictionary, table_name)
 
+    def contains(self,name):
+        '''
+        Check if the Translate contains the name
+
+        :Args:
+         - String name - the english name
+        
+        :Returns:
+         - bool result - is it contained or not
+        '''
+        rows = self.fetchall('Translate')
+        for row in rows:
+            print(row[0])
+            if row[0] == name:
+                return True
+        
+        return False
+    
+    def insertTranslate(self, en, cn):
+        '''
+        insert the translated name into the table
+
+        :Args:
+         - String en - the english name
+         - String cn - Translated Chinese name
+        '''
+        self.cursor.execute('INSERT INTO Translate VALUES ("{}", "{}");'.format(en, cn))
+        self.save()
+
+    def fetchall(self, table):
+        '''
+        Fetch all the data from a table
+
+        :Args:
+         - String table - Table name
+        
+        :Returns:
+         - Tuple result - result tuple
+        '''
+        self.cursor.execute('SELECT * FROM {}'.format(table))
+        return self.cursor.fetchall()
